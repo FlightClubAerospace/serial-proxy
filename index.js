@@ -16,12 +16,12 @@ const port = new SerialPort(process.argv[2]),
     parser = port.pipe(new Readline());
 
 port.on('open', () => {
-    broadcast(JSON.stringify({ type: 'status', status: 'open' }));
+    broadcast(JSON.stringify({ type: 'status', connected: true }));
     console.log('open');
 });
 
 port.on('close', err => {
-    broadcast(JSON.stringify({ type: 'status', status: 'closed' }));
+    broadcast(JSON.stringify({ type: 'status', connected: false }));
     broadcast(JSON.stringify({ type: 'error', error: err.toString() }));
     console.log(`closed: ${err.toString()}`);
     setTimeout(() => port.open(), 1000);
@@ -49,5 +49,5 @@ parser.on('data', line => {
 });
 
 wss.on('connection', client => {
-    client.send(JSON.stringify({ type: 'status', status: port.isOpen ? 'open' : 'closed' }));
+    client.send(JSON.stringify({ type: 'status', connected: port.isOpen }));
 });

@@ -35,7 +35,7 @@ function sendData() {
 }
 
 wss.on('connection', client => {
-    client.send(JSON.stringify({ type: 'status', status: connected ? 'open' : 'closed' }));
+    client.send(JSON.stringify({ type: 'status', connected }));
 });
 
 console.log('Listening on port 8000. Press enter to toggle whether port is connected.');
@@ -50,7 +50,7 @@ const rl = readline.createInterface({
 rl.on('line', line => {
     connected = !connected;
     process.stdout.write(`Port is ${connected ? 'connected' : 'disconnected'}.`);
-    broadcast(JSON.stringify({ type: 'status', status: connected ? 'open' : 'closed' }));
+    broadcast(JSON.stringify({ type: 'status', connected }));
 });
 
 sendData();
