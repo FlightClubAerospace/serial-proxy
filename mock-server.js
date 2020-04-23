@@ -35,7 +35,7 @@ function sendData() {
 
     broadcast(JSON.stringify({
         type: 'json',
-        date: {
+        data: {
             orientation: {
                 heading: Math.random() * 360 - 180,
                 pitch: Math.random() * 360 - 180,
