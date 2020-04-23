@@ -37,9 +37,9 @@ function sendData() {
         type: 'json',
         date: {
             orientation: {
-                heading: Math.random() * 360,
-                pitch: Math.random() * 360,
-                roll: Math.random() * 360,
+                heading: Math.random() * 360 - 180,
+                pitch: Math.random() * 360 - 180,
+                roll: Math.random() * 360 - 180,
             },
         },
     }));
