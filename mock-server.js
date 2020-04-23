@@ -40,6 +40,7 @@ function sendData() {
                 heading: Math.random() * 360 - 180,
                 pitch: Math.random() * 360 - 180,
                 roll: Math.random() * 360 - 180,
+                rollRate: Math.random() * 30 - 15,
             },
         },
     }));
