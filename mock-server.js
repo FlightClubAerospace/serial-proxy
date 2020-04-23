@@ -32,6 +32,17 @@ function sendData() {
     }));
     broadcast(JSON.stringify({ type: 'json', data: { airspeed: Math.random() * 50 }}));
     // still need orientation...that may end up in a different format
+
+    broadcast(JSON.stringify({
+        type: 'json',
+        date: {
+            orientation: {
+                heading: Math.random() * 360,
+                pitch: Math.random() * 360,
+                roll: Math.random() * 360,
+            },
+        },
+    }));
 }
 
 wss.on('connection', client => {
