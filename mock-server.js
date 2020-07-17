@@ -13,19 +13,43 @@ function broadcast(message) {
     }
 }
 
+let latitude = 37.7706,
+    longitude = -122.3782,
+    direction = Math.random() * 2 * Math.PI,
+    speed = 0.001;
+
+function convertToDegreesAndMinutes(input) {
+    if (input > 0) {
+        const degrees = Math.floor(input),
+            remainder = input - degrees;
+        return [degrees, remainder * 60];
+    } else {
+        const degrees = Math.ceil(input),
+            remainder = degrees - input;
+        return [degrees, remainder * 60];
+    }
+}
+
 function sendData() {
     setTimeout(sendData, 500);
     if (!connected) return;
+
+    direction += (Math.random() * 0.2) - 0.1;
+    latitude += speed * Math.sin(direction);
+    longitude += speed * Math.cos(direction);
+
+    const [latDeg, latMin] = convertToDegreesAndMinutes(latitude),
+        [longDeg, longMin] = convertToDegreesAndMinutes(longitude);
 
     broadcast(JSON.stringify({ type: 'json', data: { altitude: Math.random() * 100 }}));
     broadcast(JSON.stringify({
         type: 'json',
         data: {
             position: {
-                latDeg: Math.floor(Math.random() * 360 - 180),
-                longDeg: Math.floor(Math.random() * 360 - 180),
-                latMin: Math.random() * 60,
-                longMin: Math.random() * 60,
+                latDeg,
+                longDeg,
+                latMin,
+                longMin,
                 satellites: Math.floor(Math.random() * 3 + 5),
             },
         },
